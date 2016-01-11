@@ -1,0 +1,22 @@
+<project name="symfony2_cookbook" default="build" basedir=".">
+    <target name="build" depends="prepare,phpunit"/>
+
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/coverage"/>
+        <delete dir="${basedir}/build/logs"/>
+    </target>
+
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/logs"/>
+    </target>
+
+    <target name="phpunit" depends="prepare" description="Run unit tests with PHPUnit">
+	<exec executable="phpunit" failonerror="true">
+	    <arg value="-c"/>
+    	    <arg path="workspace/app/phpunit.xml.dist"/>
+	    <arg line="--coverage-clover build/logs/clover.xml --coverage-html build/coverage/"/>
+	</exec>
+    </target>
+
+</project>
